@@ -8,6 +8,16 @@ public class Patient extends Person {
     private String contactDetails;
     private String infoAddress;
 
+    private String oldSickness; // Whether the patient has an old sickness, i think this is the way to do it ?
+
+    public String getOldSickness() {
+        return oldSickness;
+    }
+
+    public void setOldSickness(String oldSickness) {
+        this.oldSickness = oldSickness;
+    }
+
     public String[] getHistory(int index) {
         return history[index];
     }
@@ -91,17 +101,19 @@ public class Patient extends Person {
     }
 
     Patient() {
-        super();
+        super(); // default values for a patient object
         history = new String[][]{{"Created account", new Date().toString(), "20$"}};
         setContactDetails("+966501111111");
         setInfoAddress("Madinah, Near UPM.");
+        setOldSickness("No old disease.");
     }
 
-    Patient(String name, int age, char gender, String contactDetails, String infoAddress) {
+    Patient(String name, int age, char gender, String contactDetails, String infoAddress, String oldSickness) {
         super(name, age, gender);
         history = new String[][]{{"Created account", new Date().toString(), "20$"}};
         setContactDetails(contactDetails);
         setInfoAddress(infoAddress);
+        setOldSickness(oldSickness);
     }
 
 

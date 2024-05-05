@@ -17,7 +17,12 @@ public class Person {
     }
 
     public void setGender(char gender) {
-        this.gender = gender;
+        if(gender == 'M' || gender == 'm' || gender == 'f' || gender == 'F') {
+            this.gender = gender;
+        }
+        else {
+            System.out.println(Colors.RED + "Invalid input. Please try again." + Colors.RESET);
+        }
     }
 
     public int getAge() {
@@ -29,7 +34,7 @@ public class Person {
     }
 
     public String toString() {
-        return "Person{ Name: %s, Age: %d, Gender: %s }".formatted(name, age, gender);
+        return "{ Name: %s, Age: %d, Gender: %s }".formatted(name, age, gender);
     }
 
     Person() {
