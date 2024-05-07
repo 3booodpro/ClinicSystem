@@ -36,6 +36,10 @@ public class Patient extends Person {
         history.addElement(newHistory);
     }
 
+    public void setAllHistory(CustomArray newValue) {
+        history = newValue;
+    }
+
     public void removeHistory(int index) {
         history.removeElement(index);
     }
