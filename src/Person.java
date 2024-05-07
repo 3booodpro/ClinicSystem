@@ -21,7 +21,7 @@ public class Person {
             this.gender = gender;
         }
         else {
-            System.out.println(Colors.RED + "Invalid input. Please try again." + Colors.RESET);
+            System.out.println(Colors.RED + "This gender exists only in USA. shame on you." + Colors.RESET);
         }
     }
 

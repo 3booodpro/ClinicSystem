@@ -41,12 +41,12 @@ public class CustomArray {
 
         int size = array.length;
         int last_new_index = 0;
-        Object[] new_array = new String[size - 1][];
+        Object[] new_array = new Object[size - 1];
         for (int i = 0; i < size; i++) {
             if (i == index) {
                 continue;
             }
-
+            System.out.println(i);
             new_array[last_new_index] = array[i];
             last_new_index += 1;
         }

@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.Timer;
 
 public class Patient extends Person {
-    private History[] history;
+    private CustomArray history;
     private String contactDetails;
     private String infoAddress;
     private String oldSickness; // Whether the patient has an old sickness, i think this is the way to do it ?
@@ -18,7 +18,7 @@ public class Patient extends Person {
     }
     public Patient() {
         // Call the parameterized constructor with default values
-        this("Default Name", 0, 'U', "", "", "No old disease");
+        this("Default Name", 0, 'M', "", "", "No old disease");
     }
 
 
@@ -27,33 +27,25 @@ public class Patient extends Person {
         this.contactDetails = contactDetails;
         this.infoAddress = infoAddress;
         this.oldSickness = oldSickness;
-        this.history = new History[]{new History("Created account", new Date(), "20$")};
+        this.history = new CustomArray();
+        this.history.addElement(new History("Created account", new Date(), "20$"));
     }
 
     public void addHistory(String description, String cost) {
         History newHistory = new History(description, new Date(), cost);
-        History[] newHistoryArray = new History[history.length + 1];
-        System.arraycopy(history, 0, newHistoryArray, 0, history.length);
-        newHistoryArray[history.length] = newHistory;
-        history = newHistoryArray;
+        history.addElement(newHistory);
     }
 
     public void removeHistory(int index) {
-        if (index >= 0 && index < history.length) {
-            // Remove the History object at the specified index
-            History[] newHistoryArray = new History[history.length - 1];
-            System.arraycopy(history, 0, newHistoryArray, 0, index);
-            System.arraycopy(history, index + 1, newHistoryArray, index, history.length - index - 1);
-            history = newHistoryArray;
-        }
+        history.removeElement(index);
     }
 
     @Override
     public String toString() {
         StringBuilder historyString = new StringBuilder();
-        for (int i = 0; i < history.length; i++) {
-            historyString.append(history[i]);
-            if (i < history.length - 1) {
+        for (int i = 0; i < history.getSize(); i++) {
+            historyString.append(history.getElement(i));
+            if (i < history.getSize() - 1) {
                 historyString.append(", ");
             }
         }

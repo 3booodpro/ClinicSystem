@@ -15,18 +15,14 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-
         //TESTING FOR TEXT BASED UI
-        Scanner input = new Scanner(System.in);
-        input.useLocale(Locale.US);
+        Scanner scanner = new Scanner(System.in);
+        scanner.useLocale(Locale.US);
 
         String docName;
         String patientName;
 
         boolean flag = true;
-
-        Scanner scanner = new Scanner(System.in);
-        scanner.useLocale(Locale.US);
         boolean exit = false;
 
         try {
@@ -38,7 +34,8 @@ public class Main {
                 System.out.println("10. Exit");
                 System.out.print("Enter your choice: ");
                 int choice = scanner.nextInt();
-                scanner.nextLine();
+
+                scanner = new Scanner(System.in);
 
                 switch (choice) {
                     case 1:
@@ -53,7 +50,9 @@ public class Main {
                         break;
                     default:
                         System.out.println(Colors.RED + "Invalid choice. Please try again." + Colors.RESET);
+                        break;
                 }
+
             }
             scanner.close();
         } catch(InputMismatchException e){

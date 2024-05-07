@@ -3,8 +3,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Timer;
 
-
-public class History extends Person{
+public class History {
     private String description;
     private Date date;
     private String cost;
@@ -46,8 +45,5 @@ public class History extends Person{
                 ", cost='" + cost + '\'' +
                 '}';
     }
-
-
-
 
 }
