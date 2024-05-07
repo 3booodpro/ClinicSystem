@@ -2,6 +2,7 @@ import java.io.*;
 import java.nio.Buffer;
 import java.util.Date;
 import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Scanner;
 
 
@@ -17,6 +18,7 @@ public class Main {
 
         //TESTING FOR TEXT BASED UI
         Scanner input = new Scanner(System.in);
+        input.useLocale(Locale.US);
 
         String docName;
         String patientName;
@@ -24,6 +26,7 @@ public class Main {
         boolean flag = true;
 
         Scanner scanner = new Scanner(System.in);
+        scanner.useLocale(Locale.US);
         boolean exit = false;
 
         try {
@@ -155,11 +158,12 @@ public class Main {
                 patient1.setGender(scanner.next().charAt(0));
                 System.out.println("Do you have any past diseases? (Answer with Yes or No): ");
                 String answerSickness = scanner.next();
-                if(answerSickness.equalsIgnoreCase("yes")){
+                scanner.nextLine(); // Consume the newline character
+                if (answerSickness.equalsIgnoreCase("yes")) {
                     System.out.println("Please type the name of your past disease: ");
                     String pastDisease = scanner.nextLine();
                     patient1.setOldSickness(pastDisease);
-                }else{
+                } else {
                     System.out.println("الحمدلله");
                 }
 

@@ -4,10 +4,9 @@ import java.util.Date;
 import java.util.Timer;
 
 public class Patient extends Person {
-    private String[][] history;
+    private History[] history;
     private String contactDetails;
     private String infoAddress;
-
     private String oldSickness; // Whether the patient has an old sickness, i think this is the way to do it ?
 
     public String getOldSickness() {
@@ -17,43 +16,54 @@ public class Patient extends Person {
     public void setOldSickness(String oldSickness) {
         this.oldSickness = oldSickness;
     }
-
-    public String[] getHistory(int index) {
-        return history[index];
+    public Patient() {
+        // Call the parameterized constructor with default values
+        this("Default Name", 0, 'U', "", "", "No old disease");
     }
 
-    public String[][] getAllHistory() {
-        return history;
+
+    public Patient(String name, int age, char gender, String contactDetails, String infoAddress, String oldSickness) {
+        super(name, age, gender);
+        this.contactDetails = contactDetails;
+        this.infoAddress = infoAddress;
+        this.oldSickness = oldSickness;
+        this.history = new History[]{new History("Created account", new Date(), "20$")};
     }
 
-    public String allHistoryToString() {
-        String output = "{";
-        for (int i = 0; i < history.length; i++) {
-            output += "{";
-            for (int j = 0; j < history[i].length; j++) {
-                output += history[i][j];
-                if (j < history[i].length - 1) {
-                    output += ", ";
-                }
-            }
-            output += "}";
-            if (i < history.length - 1) {
-                output += ", ";
-            }
+    public void addHistory(String description, String cost) {
+        History newHistory = new History(description, new Date(), cost);
+        History[] newHistoryArray = new History[history.length + 1];
+        System.arraycopy(history, 0, newHistoryArray, 0, history.length);
+        newHistoryArray[history.length] = newHistory;
+        history = newHistoryArray;
+    }
+
+    public void removeHistory(int index) {
+        if (index >= 0 && index < history.length) {
+            // Remove the History object at the specified index
+            History[] newHistoryArray = new History[history.length - 1];
+            System.arraycopy(history, 0, newHistoryArray, 0, index);
+            System.arraycopy(history, index + 1, newHistoryArray, index, history.length - index - 1);
+            history = newHistoryArray;
         }
-        output += "}";
-
-        return output;
     }
 
     @Override
     public String toString() {
-        String historyString = allHistoryToString();
-
+        StringBuilder historyString = new StringBuilder();
+        for (int i = 0; i < history.length; i++) {
+            historyString.append(history[i]);
+            if (i < history.length - 1) {
+                historyString.append(", ");
+            }
+        }
         return "Patient{" +
-                "Name: %s, Age: %d, Gender: %s, ".formatted(super.getName(), super.getAge(), super.getGender()) +
-                "history: " + historyString + " }";
+                "Name: " + getName() + ", Age: " + getAge() + ", Gender: " + getGender() +
+                ", history: [" + historyString + "], Contact Details: " + contactDetails +
+                ", Info Address: " + infoAddress + ", Old Sickness: " + oldSickness +
+                '}';
     }
+
 
     public String getContactDetails() {
         return contactDetails;
@@ -71,50 +81,11 @@ public class Patient extends Person {
         this.infoAddress = infoAddress;
     }
 
-    public void addHistory(String history, int money) {
-        int new_size = this.history.length + 1;
-        String[][] new_history = new String[new_size][];
-        for (int i = 0; i < new_size - 1; i++) {
-            new_history[i] = this.history[i];
-        }
-        new_history[new_size - 1] = new String[]{history, new Date().toString(), Integer.toString(money) + "$"};
-        this.history = new_history;
-    }
 
-    public void removeHistory(int index) {
-        if (index < 0) {
-            index = this.history.length + index;
-        }
 
-        int size = this.history.length;
-        int last_new_index = 0;
-        String[][] new_history = new String[size - 1][];
-        for (int i = 0; i < size; i++) {
-            if (i == index) {
-                continue;
-            }
 
-            new_history[last_new_index] = this.history[i];
-            last_new_index += 1;
-        }
-        this.history = new_history;
-    }
 
-    Patient() {
-        super(); // default values for a patient object
-        history = new String[][]{{"Created account", new Date().toString(), "20$"}};
-        setContactDetails("+966501111111");
-        setInfoAddress("Madinah, Near UPM.");
-        setOldSickness("No old disease.");
-    }
 
-    Patient(String name, int age, char gender, String contactDetails, String infoAddress, String oldSickness) {
-        super(name, age, gender);
-        history = new String[][]{{"Created account", new Date().toString(), "20$"}};
-        setContactDetails(contactDetails);
-        setInfoAddress(infoAddress);
-        setOldSickness(oldSickness);
-    }
 
 
 }
