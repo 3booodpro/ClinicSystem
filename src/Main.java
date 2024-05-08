@@ -1,5 +1,7 @@
 import java.io.*;
 import java.nio.Buffer;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Locale;
@@ -12,6 +14,8 @@ import java.util.Scanner;
 //
 //        Appointment firstAppoint = new Appointment(new Date(2024, 5, 10), omar);
 //        Appointment secondAppoint = new Appointment(new Date(2024, 5, 23), omar);
+
+
 public class Main {
     public static void main(String[] args) {
 
@@ -204,7 +208,26 @@ public class Main {
                             break;
                         case 2:
                             System.out.println("Booking appointment...");
-                            // Add logic to book appointment
+                            // Prompt the user to enter a date
+                            System.out.println("Enter a date (dd/MM/yyyy): ");
+                            String userInput = scanner.nextLine();
+
+                            // Create a SimpleDateFormat object with the desired date format
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+                            try {
+                                Date inputDate = dateFormat.parse(userInput);
+
+                                String formattedDate = dateFormat.format(inputDate);
+
+                                // Print the formatted date
+                                System.out.println("your date is " + formattedDate);
+                            } catch (ParseException e) {
+
+                                System.out.println("Invalid date format. Please enter date in dd/MM/yyyy format.");
+                            }
+
+                            scanner.close();
                             break;
                         case 3:
                             logout = true;
