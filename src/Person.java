@@ -1,8 +1,13 @@
-public class Person {
+import java.util.Random;
+
+public class Person extends identifier {
     // Basic Class for a person.. later we will extend it for a patient class and a doctor class.
+
+
     private String name;
     private char gender;
     private int age;
+
 
     public String getName() {
         return name;
@@ -34,18 +39,20 @@ public class Person {
     }
 
     public String toString() {
-        return "{ Name: %s, Age: %d, Gender: %s }".formatted(name, age, gender);
+        return "{ Name: %s, ID: %d, Age: %d, Gender: %s }".formatted(name, getIdentifier(), age, gender);
     }
 
     Person() {
         setName("Person");
         setAge(20);
         setGender('M');
+        setIdentifier((int) Math.floor(Math.abs(new Random().nextInt()*1000)));
     }
 
     Person(String name, int age, char gender) {
         setName(name);
         setAge(age);
         setGender(gender);
+        setIdentifier((int) Math.floor(Math.abs(new Random().nextInt()*1000)));
     }
 }

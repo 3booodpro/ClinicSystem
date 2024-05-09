@@ -1,5 +1,0 @@
-
-Patient Information: Patient{Name: MUAYYAD, Age: ١٩, Gender: M, history: {{Created account, Tue May 07 03:51:12 AST 2024, 20$}} }
-Patient Information: Patient{Name: MUAYYAD MUTEA ALNOUMAN, Age: ١٠, Gender: M, history: {{Created account, Tue May 07 03:58:00 AST 2024, 20$}} }
-Patient Information: Patient{Name: m, Age: 11, Gender: m, history: [History{description='Created account', date=Tue May 07 21:46:08 AST 2024, cost='20$'}], Contact Details: , Info Address: , Old Sickness: No old disease}
-Patient Information: Patient{Name: mmm, Age: 12, Gender: m, history: [History{description='Created account', date=Tue May 07 21:53:40 AST 2024, cost='20$'}], Contact Details: , Info Address: , Old Sickness: No old disease}

@@ -5,9 +5,11 @@ import java.util.Timer;
 
 public class Patient extends Person {
     private CustomArray history;
-    private String contactDetails;
+    private int contactDetails;
     private String infoAddress;
     private String oldSickness; // Whether the patient has an old sickness, i think this is the way to do it ?
+
+
 
     public String getOldSickness() {
         return oldSickness;
@@ -18,11 +20,10 @@ public class Patient extends Person {
     }
     public Patient() {
         // Call the parameterized constructor with default values
-        this("Default Name", 0, 'M', "", "", "No old disease");
+        this("Default Name", 0, 'M', 0, "Medina", "No old disease");
     }
 
-
-    public Patient(String name, int age, char gender, String contactDetails, String infoAddress, String oldSickness) {
+    public Patient(String name, int age, char gender, int contactDetails, String infoAddress, String oldSickness) {
         super(name, age, gender);
         this.contactDetails = contactDetails;
         this.infoAddress = infoAddress;
@@ -44,28 +45,13 @@ public class Patient extends Person {
         history.removeElement(index);
     }
 
-    @Override
-    public String toString() {
-        StringBuilder historyString = new StringBuilder();
-        for (int i = 0; i < history.getSize(); i++) {
-            historyString.append(history.getElement(i));
-            if (i < history.getSize() - 1) {
-                historyString.append(", ");
-            }
-        }
-        return "Patient{" +
-                "Name: " + getName() + ", Age: " + getAge() + ", Gender: " + getGender() +
-                ", history: [" + historyString + "], Contact Details: " + contactDetails +
-                ", Info Address: " + infoAddress + ", Old Sickness: " + oldSickness +
-                '}';
-    }
 
 
-    public String getContactDetails() {
+    public int getContactDetails() {
         return contactDetails;
     }
 
-    public void setContactDetails(String contactDetails) {
+    public void setContactDetails(int contactDetails) {
         this.contactDetails = contactDetails;
     }
 
@@ -80,6 +66,21 @@ public class Patient extends Person {
 
 
 
+    @Override
+    public String toString() {
+        StringBuilder historyString = new StringBuilder();
+        for (int i = 0; i < history.getSize(); i++) {
+            historyString.append(history.getElement(i));
+            if (i < history.getSize() - 1) {
+                historyString.append(", ");
+            }
+        }
+        return "\nPatient {" +
+                "Name: " + getName() + ", Age: " + getAge() + ", Gender: " + getGender() + "}" +
+                ",\nhistory: [" + historyString + "],\n Contact Details: " + getContactDetails() +
+                ", Info Address: " + getInfoAddress() + ", Old Sickness: " + getOldSickness() +
+                '}' + "\n";
+    }
 
 
 

@@ -1,1 +1,0 @@
-Doctor Information: { Name: MUAYYAD, Age: ١٩, Gender: M } Doctor Information: { Name: MUAYYAD, Age: ١٩, Gender: M } Doctor Information: { Name: ee, Age: ١١, Gender: M } 
