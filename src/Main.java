@@ -261,11 +261,16 @@ public class Main {
             switch (choice) {
                 case 1:
                     System.out.println("Viewing appointments...");
-                    // Add logic to view appointments
+
                     break;
                 case 2:
-                    System.out.println("Booking appointment...");
-                    // Add logic to book appointment
+                    if( Files.getDoctorsList() != null){
+                        for (Doctor dctr : Files.getDoctorsList()) {
+                            System.out.println(Colors.GREEN + "Dr."+ dctr.getName() + " - " + dctr.getSpecialty() + Colors.RESET );
+                        }
+                    }else{
+                        System.out.println("No doctors registered" );
+                    }
                     break;
                 case 3:
                     try {
@@ -276,7 +281,9 @@ public class Main {
                     }
                     try{
                         System.out.print("Please enter/modify your Address Info (City or Neighborhood): ");
-                        patient1.setInfoAddress(scanner.next());
+                        patient1.setInfoAddress(scanner.nextLine());
+                        scanner.nextLine();
+
                     }catch(Exception e){
                         System.out.println("Please enter a valid location.");
                     }

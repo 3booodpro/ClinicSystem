@@ -204,7 +204,36 @@ public class Files {
         }
         return null;
     }
+    public static List<Doctor> getDoctorsList() {
+        try {
+            String FiledData;
+            try {
+                StringBuilder content = new StringBuilder();
+                java.nio.file.Files.readAllLines(Paths.get(FileData.Doctors + ".json")).forEach(line -> content.append(line).append("\n"));
+                FiledData = content.toString();
+            } catch (Exception e) {
+                FiledData = "[]";
+            }
+            try {
+                ArrayList<Doctor> DoctorsList = new ArrayList<Doctor>();
+                JSONArray jsonarr = new JSONArray(FiledData);
+                for (int i = 0; i < jsonarr.length(); i++) {
+                    JSONObject jsonobj = jsonarr.getJSONObject(i);
+                    DoctorsList.add(new Gson().fromJson(jsonobj.toString(), Doctor.class));
+                }
+                if (DoctorsList.isEmpty()) {
+                    return null;
+                }
+                return DoctorsList;
+            } catch (Exception e) {
+                //e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        return null;
+    }
 
 
 
