@@ -280,6 +280,7 @@ public class Main {
                     }catch(Exception e){
                         System.out.println("Please enter a valid location.");
                     }
+                    Files.saveData(FileData.Patients, patient1);
                     break;
                 case 4:
                     System.out.println(Colors.MAGENTA + Files.getPatientByID(patient1.getIdentifier()) + Colors.RESET);
