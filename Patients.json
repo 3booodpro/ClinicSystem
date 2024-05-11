@@ -1,1 +1,1 @@
-[{"id":1,"name":"Test","gender":"M","age":30,"history":null,"contactDetails":0,"infoAddress":null,"oldSickness":null}]
+[{"id":1,"name":"Test","gender":"M","age":30,"history":[{"description":"Booked an Appointment at 2024-5-11. With Dr.Abdulwahab","date":1715447408152,"cost":"20$"}],"schedule":[{"date":"2024-5-12","patient_name":"Test","doctor_name":"Abdulwahab"},{"date":"2028-1-1","patient_name":"Test","doctor_name":"Abdulwahab"},{"date":"2024-5-11","patient_name":"Test","doctor_name":"Abdulwahab"}],"contactDetails":0,"infoAddress":null,"oldSickness":null}]

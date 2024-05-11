@@ -5,14 +5,34 @@ import java.util.Timer;
 
 public class Patient extends Person {
     private ArrayList<Object> history;
+    private ArrayList<Object> schedule;
     private int contactDetails;
-    private String infoAddress;
-    private String oldSickness; // Whether the patient has an old sickness, i think this is the way to do it ?
 
     public Patient() {
         super();
+        this.history = new ArrayList<Object>();
+        this.schedule = new ArrayList<Object>();
     }
 
+    public Patient(int id, String name, char gender, int age, ArrayList<Object> history, ArrayList<Object> schedule, int contactDetails, String infoAddress, String oldSickness) {
+        super(id, name, gender, age);
+        this.history = history;
+        this.schedule = schedule;
+        this.contactDetails = contactDetails;
+        this.infoAddress = infoAddress;
+        this.oldSickness = oldSickness;
+    }
+
+    public ArrayList<Object> getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(ArrayList<Object> schedule) {
+        this.schedule = schedule;
+    }
+
+    private String infoAddress;
+    private String oldSickness; // Whether the patient has an old sickness, i think this is the way to do it ?
 
     public ArrayList<Object> getHistory() {
         return history;
@@ -31,14 +51,6 @@ public class Patient extends Person {
     }
 
     public Patient(ArrayList<Object> history, int contactDetails, String infoAddress, String oldSickness) {
-        this.history = history;
-        this.contactDetails = contactDetails;
-        this.infoAddress = infoAddress;
-        this.oldSickness = oldSickness;
-    }
-
-    public Patient(int id, String name, char gender, int age, ArrayList<Object> history, int contactDetails, String infoAddress, String oldSickness) {
-        super(id, name, gender, age);
         this.history = history;
         this.contactDetails = contactDetails;
         this.infoAddress = infoAddress;

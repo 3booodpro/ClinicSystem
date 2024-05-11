@@ -1,6 +1,14 @@
-import java.util.InputMismatchException;
-import java.util.Locale;
-import java.util.Scanner;
+import javax.print.Doc;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.MonthDay;
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
+import java.util.*;
 
 public class Menus {
     public static void MainMenu() {
@@ -143,6 +151,9 @@ public class Menus {
                 case 1:
                     System.out.println("Viewing appointments...");
                     // Add logic to view appointments
+
+                    System.out.println(Files.getDoctorByID(doctor.getId()).getSchedule());
+
                     break;
                 case 2:
                     System.out.println("Adding prescription...");
@@ -267,12 +278,92 @@ public class Menus {
                 case 1:
                     System.out.println("Viewing appointments...");
 
+                    System.out.println(Files.getPatientByID(patient.getId()).getSchedule());
+
                     break;
                 case 2:
-                    if( Files.getDoctorsList() != null){
-                        for (Doctor dctr : Files.getDoctorsList()) {
-                            System.out.println(Colors.GREEN + "Dr."+ dctr.getName() + " - " + dctr.getSpecialty() + Colors.RESET );
+                    if( Files.getDoctorsList().size() >= 1 ){
+                        for (int i = 0; i < Files.getDoctorsList().size(); i++) {
+                            Doctor doctor = Files.getDoctorsList().get(i);
+                            System.out.println(Colors.YELLOW + i + ") Dr." + doctor.getName() + "(" + doctor.getSpecialty() + ")");
                         }
+
+                        System.out.println(Colors.YELLOW + "-1) Cancel");
+
+                        System.out.println("Enter your choice: ");
+                        int doctor_choice = scanner.nextInt();
+
+                        if (doctor_choice < -1 || doctor_choice > Files.getDoctorsList().size() - 1) {
+                            while (true) {
+                                System.out.println(Colors.RED + "Invalid input, Please try again." + Colors.RESET);
+                                System.out.println(Colors.YELLOW + "Enter your choice: ");
+                                doctor_choice = scanner.nextInt();
+                                if (doctor_choice > 0 && doctor_choice < Files.getDoctorsList().size()) {
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (doctor_choice == -1) {
+                            System.out.println(Colors.YELLOW + "Booking Canceled.." + Colors.RESET);
+                            break;
+                        }
+
+                        Doctor doctor = Files.getDoctorsList().get(doctor_choice);
+
+                        int year;
+                        int month;
+                        int day;
+
+                        scanner.nextLine();
+                        while (true) {
+                            System.out.println(Colors.YELLOW + "Enter the date in yyyy-MM-dd format: ");
+                            String dateInput = scanner.nextLine();
+
+                            String dateFormat = "yyyy-MM-dd";
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
+
+                            try {
+                                LocalDate date = LocalDate.parse(dateInput, formatter);
+
+                                Date current_date = new Date();
+                                current_date.setTime(0);
+                                current_date.setSeconds(0);
+                                current_date.setMinutes(0);
+                                current_date.setHours(0);
+
+                                Date entered_date = new SimpleDateFormat(dateFormat).parse(dateInput);
+                                entered_date.setTime(0);
+                                entered_date.setSeconds(0);
+                                entered_date.setMinutes(0);
+                                entered_date.setHours(0);
+
+                                if (current_date.compareTo(entered_date) > 0) {
+                                    System.out.println(Colors.RED + "Invalid date, Please try again." + Colors.RESET);
+                                    continue;
+                                }
+
+                                year = date.getYear();
+                                month = date.getMonth().getValue();
+                                day = date.getDayOfMonth();
+
+                                break;
+                            } catch (Exception e) {
+                                System.out.println(Colors.RED + "Invalid date, Please try again." + Colors.RESET);
+                            }
+                        }
+
+                        Appointment appointment = new Appointment(year + "-" + month + "-" + day, patient.getName(), doctor.getName());
+
+                        patient.getSchedule().add(appointment);
+                        patient.addHistory("Booked an Appointment at " + year + "-" + month + "-" + day + ". With Dr." + doctor.getName(), "20$");
+                        Files.addData(FileData.Patients, patient);
+
+                        doctor.getSchedule().add(appointment);
+                        Files.addData(FileData.Doctors, doctor);
+
+                        System.out.println(Colors.GREEN + "Appointment booked successfully. at " + year + "-" + month + "-" + day + ". With Dr." + doctor.getName() + Colors.RESET);
+
                     }else{
                         System.out.println("No doctors registered" );
                     }
