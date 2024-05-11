@@ -34,5 +34,13 @@ public class Doctor extends Person {
         setSchedule(schedule);
     }
 
+    @Override
+    public String toString() {
+        return "Doctor{" +
+                "specialty='" + specialty + '\'' +
+                ", schedule=" + schedule +
+                '}';
+    }
+
 
 }

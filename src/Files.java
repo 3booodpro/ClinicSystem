@@ -235,6 +235,23 @@ public class Files {
         return null;
     }
 
+    public static void accessDoctorsList() {
+        List<Doctor> doctors = getDoctorsList();
+
+        if (doctors != null && !doctors.isEmpty()) {
+            System.out.println("List of doctors:");
+            for (int i = 0; i < doctors.size(); i++) {
+                Doctor doctor = doctors.get(i);
+                System.out.println(i + ": " + doctor.getName());
+            }
+            int chosenIndex = 0;
+            Doctor chosenDoctor = doctors.get(chosenIndex);
+            System.out.println("You chose: " + chosenDoctor.getName());
+        } else {
+            System.out.println("No doctors available");
+        }
+    }
+
 
 
 
