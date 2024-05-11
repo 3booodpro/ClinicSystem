@@ -1,11 +1,21 @@
 import java.util.Random;
 
-public class Person extends identifier {
+public class Person {
     // Basic Class for a person.. later we will extend it for a patient class and a doctor class.
 
-
+    private int id;
     private String name;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     private char gender;
+
     private int age;
 
 
@@ -39,20 +49,20 @@ public class Person extends identifier {
     }
 
     public String toString() {
-        return "{ Name: %s, ID: %d, Age: %d, Gender: %s }".formatted(name, getIdentifier(), age, gender);
+        return "Name: %s, ID: %d, Age: %d, Gender: %s, ".formatted(name, getId(), age, gender);
     }
 
     Person() {
         setName("Person");
         setAge(20);
         setGender('M');
-        setIdentifier((int) Math.floor(Math.abs(new Random().nextInt()*1000)));
+        setId((int) Math.floor(Math.abs(new Random().nextInt()*1000)));
     }
 
-    Person(String name, int age, char gender) {
-        setName(name);
-        setAge(age);
-        setGender(gender);
-        setIdentifier((int) Math.floor(Math.abs(new Random().nextInt()*1000)));
+    public Person(int id, String name, char gender, int age) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+        this.age = age;
     }
 }

@@ -1,259 +1,89 @@
-import com.google.gson.Gson;
-import org.json.*;
-import java.io.FileWriter;
-import java.nio.file.Paths;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import javax.print.Doc;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Files {
 
-    public static void saveData(FileData FileType, Object data) {
-        try {
-            String FiledData;
+    public static void main(String[] args) {
+        Doctor d1 = new Doctor();
+    }
+
+    public static void addData(FileData FileType, Object data) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        if (FileType == FileData.Doctors) {
             try {
-                StringBuilder content = new StringBuilder();
-                java.nio.file.Files.readAllLines(Paths.get("" + FileType.name() + ".json")).forEach(line -> content.append(line).append("\n"));
-                FiledData = content.toString();
-            } catch (Exception e) {
-                FiledData = "[]";
+                ArrayList<Doctor> old_data = mapper.readValue(new File("Doctors.json"), new TypeReference<ArrayList<Doctor>>() {});
+                old_data.add((Doctor) data);
+                mapper.writeValue(new File("Doctors.json"), old_data);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
             }
 
-            JSONArray obj = new JSONArray();
-            boolean Overwritten = false;
+        } else if (FileType == FileData.Patients) {
             try {
-                obj = new JSONArray(FiledData);
-                for (int i = 0; i < obj.length(); i++) {
-                    JSONObject jsonobj = obj.getJSONObject(i);
-                    if (jsonobj.getInt("identifier") == ((identifier)data).getIdentifier()) {
-                        obj.remove(i);
-                        obj.put(new JSONObject(data));
-                        Overwritten = true;
-                    }
-                }
-            } catch (Exception e) {
+                ArrayList<Patient> old_data = mapper.readValue(new File("Patients.json"), new TypeReference<ArrayList<Patient>>() {});
+                old_data.add((Patient) data);
+                mapper.writeValue(new File("Patients.json"), old_data);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
             }
 
-            if(!Overwritten){
-                obj.put(new JSONObject(data));
-            }
-
-            FileWriter writer = new FileWriter("" + FileType.name() + ".json");
-            obj.write(writer);
-            writer.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
     }
 
-    public static Patient getPatientByID(int ID) {
-
+    public static Doctor getDoctorByID(int id) {
         try {
-            String FiledData;
-            try {
-                StringBuilder content = new StringBuilder();
-                java.nio.file.Files.readAllLines(Paths.get(FileData.Patients+ ".json")).forEach(line -> content.append(line).append("\n"));
-                FiledData = content.toString();
-            } catch (Exception e) {
-                FiledData = "[]";
-            }
-
-            try {
-                JSONArray jsonarr = new JSONArray(FiledData);
-                for (int i = 0; i < jsonarr.length(); i++) {
-                    JSONObject jsonobj = jsonarr.getJSONObject(i);
-                    if (jsonobj.getInt("identifier") == ID) {
-                        return new Gson().fromJson(jsonobj.toString(), Patient.class);
-                    }
+            ObjectMapper mapper = new ObjectMapper();
+            ArrayList<Doctor> stored_data = mapper.readValue(new File("Doctors.json"), new TypeReference<ArrayList<Doctor>>() {});
+            for (int i = 0; i < stored_data.size(); i++) {
+                if (stored_data.get(i).getId() == id) {
+                    return stored_data.get(i);
                 }
-            } catch (Exception e) {
-                // e.printStackTrace();
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static Doctor getDoctorByID(int ID) {
-        try {
-            String FiledData;
-            try {
-                StringBuilder content = new StringBuilder();
-                java.nio.file.Files.readAllLines(Paths.get(FileData.Doctors + ".json")).forEach(line -> content.append(line).append("\n"));
-                FiledData = content.toString();
-            } catch (Exception e) {
-                FiledData = "[]";
-            }
-            try {
-                JSONArray jsonarr = new JSONArray(FiledData);
-                for (int i = 0; i < jsonarr.length(); i++) {
-                    JSONObject jsonobj = jsonarr.getJSONObject(i);
-                    if (jsonobj.getInt("identifier") == ID) {
-                        return new Gson().fromJson(jsonobj.toString(), Doctor.class);
-                    }
-                }
-            } catch (Exception e) {
-                // e.printStackTrace();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) {}
 
         return null;
     }
 
-
-    public static List<Appointment> getAppointmentsByPatientID(int PatientID) {
+    public static Patient getPatientByID(int id) {
         try {
-            String FiledData;
-            try {
-                StringBuilder content = new StringBuilder();
-                java.nio.file.Files.readAllLines(Paths.get(FileData.Appointments + ".json")).forEach(line -> content.append(line).append("\n"));
-                FiledData = content.toString();
-            } catch (Exception e) {
-             FiledData = "[]";
-            }
-
-            try {
-                ArrayList<Appointment> SavedAppointments = new ArrayList<Appointment>();
-                JSONArray jsonarr = new JSONArray(FiledData);
-                for (int i = 0; i < jsonarr.length(); i++) {
-                    JSONObject jsonobj = jsonarr.getJSONObject(i);
-                    if (jsonobj.getInt("patientID") == PatientID) {
-                        SavedAppointments.add(new Gson().fromJson(jsonobj.toString(), Appointment.class));
-                    }
+            ObjectMapper mapper = new ObjectMapper();
+            ArrayList<Patient> stored_data = mapper.readValue(new File("Patients.json"), new TypeReference<ArrayList<Patient>>() {});
+            for (int i = 0; i < stored_data.size(); i++) {
+                if (stored_data.get(i).getId() == id) {
+                    return stored_data.get(i);
                 }
-                if(SavedAppointments.isEmpty()){
-                    return null;
-                }
-                return SavedAppointments;
-            } catch (Exception e) {
-                // e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        } catch (IOException e) {}
         return null;
     }
 
-
-    public static List<Appointment> getAppointmentsByDoctorID(int DoctorID) {
+    public static ArrayList<Doctor> getDoctorsList() {
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            String FiledData;
-            try {
-                StringBuilder content = new StringBuilder();
-                java.nio.file.Files.readAllLines(Paths.get(FileData.Appointments + ".json")).forEach(line -> content.append(line).append("\n"));
-                FiledData = content.toString();
-            } catch (Exception e) {
-                FiledData = "[]";
-            }
-            try {
-                ArrayList<Appointment> SavedAppointments = new ArrayList<Appointment>();
-                JSONArray jsonarr = new JSONArray(FiledData);
-                for (int i = 0; i < jsonarr.length(); i++) {
-                    JSONObject jsonobj = jsonarr.getJSONObject(i);
-                    if (jsonobj.getInt("doctorID") == DoctorID) {
-                        SavedAppointments.add(new Gson().fromJson(jsonobj.toString(), Appointment.class));
-                    }
-                }
-                if(SavedAppointments.isEmpty()){
-                    return null;
-                }
-                return SavedAppointments;
-            } catch (Exception e) {
-                //e.printStackTrace();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            return mapper.readValue(new File("Doctors.json"), new TypeReference<ArrayList<Doctor>>(){});
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-
-        return null;
+        return new ArrayList<Doctor>();
     }
 
-
-    public static Appointment getAppointmentByID(int ID) {
-
+    public static ArrayList<Patient> getPatientsList() {
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            String FiledData;
-            try {
-                StringBuilder content = new StringBuilder();
-                java.nio.file.Files.readAllLines(Paths.get(FileData.Appointments + ".json")).forEach(line -> content.append(line).append("\n"));
-                FiledData = content.toString();
-            } catch (Exception e) {
-                FiledData = "[]";
-            }
-            try {
-                JSONArray jsonarr = new JSONArray(FiledData);
-                for (int i = 0; i < jsonarr.length(); i++) {
-                    JSONObject jsonobj = jsonarr.getJSONObject(i);
-                    if (jsonobj.getInt("identifier") == ID) {
-                        return new Gson().fromJson(jsonobj.toString(), Appointment.class);
-                    }
-                }
-            } catch (Exception e) {
-                // e.printStackTrace();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            return mapper.readValue(new File("Patients.json"), new TypeReference<ArrayList<Patient>>(){});
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-        return null;
+        return new ArrayList<Patient>();
     }
-    public static List<Doctor> getDoctorsList() {
-        try {
-            String FiledData;
-            try {
-                StringBuilder content = new StringBuilder();
-                java.nio.file.Files.readAllLines(Paths.get(FileData.Doctors + ".json")).forEach(line -> content.append(line).append("\n"));
-                FiledData = content.toString();
-            } catch (Exception e) {
-                FiledData = "[]";
-            }
-            try {
-                ArrayList<Doctor> DoctorsList = new ArrayList<Doctor>();
-                JSONArray jsonarr = new JSONArray(FiledData);
-                for (int i = 0; i < jsonarr.length(); i++) {
-                    JSONObject jsonobj = jsonarr.getJSONObject(i);
-                    DoctorsList.add(new Gson().fromJson(jsonobj.toString(), Doctor.class));
-                }
-                if (DoctorsList.isEmpty()) {
-                    return null;
-                }
-                return DoctorsList;
-            } catch (Exception e) {
-                //e.printStackTrace();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static void accessDoctorsList() {
-        List<Doctor> doctors = getDoctorsList();
-
-        if (doctors != null && !doctors.isEmpty()) {
-            System.out.println("List of doctors:");
-            for (int i = 0; i < doctors.size(); i++) {
-                Doctor doctor = doctors.get(i);
-                System.out.println(i + ": " + doctor.getName());
-            }
-            int chosenIndex = 0;
-            Doctor chosenDoctor = doctors.get(chosenIndex);
-            System.out.println("You chose: " + chosenDoctor.getName());
-        } else {
-            System.out.println("No doctors available");
-        }
-    }
-
-
-
 
 }
 
