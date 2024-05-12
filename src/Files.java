@@ -7,6 +7,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/*
+ * Abdulwahab Najib Abdulrahman 4410443
+ * Karam M. Ali Khirallah 4410366
+ * Muayyad Mutea Alnouman 4410286
+ * */
+
 public class Files {
     // this is the file management class, it utilizes json libraries in order to save & read data
 

@@ -1,5 +1,9 @@
 import java.util.Random;
-
+/*
+ * Abdulwahab Najib Abdulrahman 4410443
+ * Karam M. Ali Khirallah 4410366
+ * Muayyad Mutea Alnouman 4410286
+ * */
 public class Person {
 
     // This class represents a basic Person object. It serves as a foundation class

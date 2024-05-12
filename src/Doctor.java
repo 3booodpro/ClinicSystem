@@ -2,7 +2,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
+/*
+ * Abdulwahab Najib Abdulrahman 4410443
+ * Karam M. Ali Khirallah 4410366
+ * Muayyad Mutea Alnouman 4410286
+ * */
 public class Doctor extends Person {
     // Doctor class inherits from Person class
 

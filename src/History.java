@@ -2,6 +2,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Timer;
+/*
+ * Abdulwahab Najib Abdulrahman 4410443
+ * Karam M. Ali Khirallah 4410366
+ * Muayyad Mutea Alnouman 4410286
+ * */
+
 
 /*
 This class was primarily created to address the issue we were facing with the 2D Array.

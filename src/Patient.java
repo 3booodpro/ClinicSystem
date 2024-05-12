@@ -3,6 +3,13 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Timer; // This import might not be used in this class
 
+/*
+ * Abdulwahab Najib Abdulrahman 4410443
+ * Karam M. Ali Khirallah 4410366
+ * Muayyad Mutea Alnouman 4410286
+ * */
+
+
 public class Patient extends Person {
 
     // This class represents a Patient in the Clinic Management System
