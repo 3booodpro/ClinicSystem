@@ -36,11 +36,11 @@ public class Menus {
                 switch (choice) {
                     case 1:
                         doctorLogin(scanner);
-                        exit = true;
+
                         break;
                     case 2:
                         patientLogin(scanner);
-                        exit = true;
+
                         break;
                     case 10:
                         System.out.println("Exiting...");
