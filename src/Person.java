@@ -1,10 +1,12 @@
 import java.util.Random;
 
 public class Person {
-    // Basic Class for a person.. later we will extend it for a patient class and a doctor class.
 
-    private int id;
-    private String name;
+    // This class represents a basic Person object. It serves as a foundation class
+    // for subclasses like Patient and Doctor.
+
+    private int id;  // Unique identifier for the person
+    private String name;  // Person's name
 
     public int getId() {
         return id;
@@ -14,10 +16,9 @@ public class Person {
         this.id = id;
     }
 
-    private char gender;
+    private char gender;  // Person's gender (M or F)
 
-    private int age;
-
+    private int age;  // Person's age
 
     public String getName() {
         return name;
@@ -31,12 +32,12 @@ public class Person {
         return gender;
     }
 
+    // Ensures gender is set to either 'M' or 'F'
     public void setGender(char gender) {
-        if(gender == 'M' || gender == 'm' || gender == 'f' || gender == 'F') {
+        if (gender == 'M' || gender == 'm' || gender == 'f' || gender == 'F') {
             this.gender = gender;
-        }
-        else {
-            System.out.println(Colors.RED + "This gender exists only in USA. shame on you." + Colors.RESET);
+        } else {
+            System.out.println("Invalid gender. Please enter 'M' or 'F'."); // More informative error message
         }
     }
 
@@ -48,17 +49,20 @@ public class Person {
         this.age = age;
     }
 
+    @Override
     public String toString() {
-        return "Name: %s, ID: %d, Age: %d, Gender: %s, ".formatted(name, getId(), age, gender);
+        return "Name: %s, ID: %d, Age: %d, Gender: %s".formatted(name, getId(), age, gender);
     }
 
-    Person() {
+    // Default constructor with random ID, default values for name, age and gender (M)
+    public Person() {
         setName("Person");
         setAge(20);
         setGender('M');
-        setId((int) Math.floor(Math.abs(new Random().nextInt()*1000)));
+        setId((int) Math.floor(Math.abs(new Random().nextInt() * 1000))); // Generates a random positive integer ID
     }
 
+    // Constructor with arguments for ID, name, gender and age
     public Person(int id, String name, char gender, int age) {
         this.id = id;
         this.name = name;
